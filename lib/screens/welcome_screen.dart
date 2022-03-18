@@ -4,7 +4,6 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import '../components/rounded_button.dart';
 
-
 class WelcomeScreen extends StatefulWidget {
   static const String id = 'welcome_screen';
   WelcomeScreen({Key? key}) : super(key: key);
@@ -12,29 +11,34 @@ class WelcomeScreen extends StatefulWidget {
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
-
 class _WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
-   late AnimationController controller;
-   late Animation animation;
+    late AnimationController controller;
+    late Animation animation;
 
   @override
   void initState() {
     super.initState();
     controller =
         AnimationController(duration: Duration(seconds: 1), vsync: this);
-    animation = ColorTween(begin: Colors.lightBlueAccent, end: Colors.black54)
+    animation = ColorTween(begin: Colors.blueGrey, end: Colors.white)
         .animate(controller);
     controller.forward();
     controller.addListener(() {
       setState(() {});
     });
   }
+  @override
+  void dispose() {
+   controller.dispose();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.red,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
@@ -47,23 +51,20 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   tag: 'logo',
                   child: Container(
                     child: Image.asset('images/logo.png'),
-                    height: 60.0,
+                    height: 100.0,
                   ),
                 ),
                 AnimatedTextKit(
                   animatedTexts: [
-                    RotateAnimatedText(
-                        'Amo Chat'
+                    TyperAnimatedText(
+                        'AMO CHAT'
                     ),
                   ],
-                  onTap: () {
-                    print('Amo Chat');
-                  } ,
                 ),
               ],
             ),
              SizedBox(
-              height: 48.0,
+              height: 40.0,
             ),
             RoundedButton(
               title: 'log In',
@@ -74,7 +75,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
             ),
             RoundedButton(
               title: 'Register',
-              colour: Colors.lightBlueAccent,
+              colour: Colors.blueAccent,
               onPressed: () {
                 Navigator.pushNamed(context, RegistrationScreen.id);
               },

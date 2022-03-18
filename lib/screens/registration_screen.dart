@@ -16,7 +16,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -28,7 +28,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 child: Image.asset('images/logo.png'),
               ),
             ),
-            const SizedBox(
+            SizedBox(
               height: 48.0,
             ),
             TextField(
@@ -38,7 +38,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               decoration:
                   kTextFieldDecoration.copyWith(hintText: 'Enter your Email'),
             ),
-            const SizedBox(
+            SizedBox(
               height: 8.0,
             ),
             TextField(
@@ -52,7 +52,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               height: 24.0,
             ),
             RoundedButton(
-              colour: Colors.black45,
+              colour: Colors.blueAccent,
               title: 'Register',
               onPressed: () {},
             ),
