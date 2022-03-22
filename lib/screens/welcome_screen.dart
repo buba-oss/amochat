@@ -11,10 +11,11 @@ class WelcomeScreen extends StatefulWidget {
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
+
 class _WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
-    late AnimationController controller;
-    late Animation animation;
+  late AnimationController controller;
+  late Animation animation;
 
   @override
   void initState() {
@@ -28,17 +29,17 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       setState(() {});
     });
   }
+
   @override
   void dispose() {
-   controller.dispose();
+    controller.dispose();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.greenAccent,
+      backgroundColor: animation.value,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
@@ -51,19 +52,23 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   tag: 'logo',
                   child: Container(
                     child: Image.asset('images/logo.png'),
-                    height: 100.0,
+                    height: 60.0,
                   ),
                 ),
                 AnimatedTextKit(
                   animatedTexts: [
                     TyperAnimatedText(
-                        'AMO CHAT'
+                      'AMO CHAT',
+                      textStyle: TextStyle(
+                        fontSize: 45.0,
+                        fontWeight: FontWeight.w900,
+                      ),
                     ),
                   ],
                 ),
               ],
             ),
-             SizedBox(
+            SizedBox(
               height: 48.0,
             ),
             RoundedButton(
