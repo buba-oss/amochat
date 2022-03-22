@@ -38,7 +38,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.red,
+      backgroundColor: Colors.greenAccent,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
@@ -64,7 +64,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
               ],
             ),
              SizedBox(
-              height: 40.0,
+              height: 48.0,
             ),
             RoundedButton(
               title: 'log In',
