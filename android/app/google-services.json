@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "874131745945",
+    "project_id": "amo-chat-41c0f",
+    "storage_bucket": "amo-chat-41c0f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874131745945:android:51a217d2e6784601651c08",
+        "android_client_info": {
+          "package_name": "com.BubaB.amocha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "874131745945-dgobrup4ge7tufed77n1lpn0aqk1ufrp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbiy2aEXNXpU4HtcqIajCHqWfTxDE2ZeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "874131745945-dgobrup4ge7tufed77n1lpn0aqk1ufrp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874131745945:android:63d3e8ceb068b703651c08",
+        "android_client_info": {
+          "package_name": "com.BubaB.amochat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "874131745945-dgobrup4ge7tufed77n1lpn0aqk1ufrp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbiy2aEXNXpU4HtcqIajCHqWfTxDE2ZeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "874131745945-dgobrup4ge7tufed77n1lpn0aqk1ufrp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
