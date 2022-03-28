@@ -1,4 +1,5 @@
 import 'package:amochat/constants.dart';
+import 'package:amochat/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:amochat/components/rounded_button.dart';
 
@@ -38,6 +39,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               height: 48.0,
             ),
             TextField(
+              keyboardType: TextInputType.emailAddress,
+              textAlign: TextAlign.center,
               onChanged: (value) {
                 email = value;
               },
@@ -48,6 +51,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               height: 8.0,
             ),
             TextField(
+              obscureText: true,
+              textAlign: TextAlign.center,
               onChanged: (value) {
                 password = value;
               },
@@ -60,9 +65,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             RoundedButton(
               colour: Colors.blueAccent,
               title: 'Register',
-              onPressed: () {
-                print(email);
-                print(password);
+              onPressed: () async {
+                try {
+                  Navigator.pushNamed(context, ChatScreen.id);
+                } catch (e) {
+                  print(e);
+                }
               },
             ),
           ],
