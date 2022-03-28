@@ -14,12 +14,14 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
-  late AnimationController controller;
-  late Animation animation;
+   late AnimationController controller;
+   late Animation animation;
 
   @override
   void initState() {
     super.initState();
+
+
     controller =
         AnimationController(duration: Duration(seconds: 1), vsync: this);
     animation = ColorTween(begin: Colors.blueGrey, end: Colors.white)
