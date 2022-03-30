@@ -1,12 +1,11 @@
+
 import 'package:flutter/material.dart';
 import 'package:amochat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 class ChatScreen extends StatefulWidget {
-
   static const String id = 'chat_screen';
-   ChatScreen({Key? key}) : super(key: key);
+  ChatScreen({Key? key}) : super(key: key);
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -14,19 +13,19 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final _auth = FirebaseAuth.instance;
-  late FirebaseUser  loggedInUser;
-  
+  late FirebaseUser LoggedInUser;
+
   @override
   void initState() {
     super.initState();
     getCurrentUser();
   }
 
-  void getCurrentUser() async{
-    try  {
-    final user = await _auth.currentUser!;
-    loggedInUser = user as FirebaseUser;
-    print(loggedInUser);
+  void getCurrentUser() async {
+    try {
+      final user = await _auth.currentUser!;
+      LoggedInUser = user as FirebaseUser;
+      print(LoggedInUser);
     } catch (e) {
       print(e);
     }
@@ -86,8 +85,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
 class FirebaseUser {
 }
-
-
 
 
 
