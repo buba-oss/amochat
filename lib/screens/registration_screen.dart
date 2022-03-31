@@ -1,7 +1,8 @@
+import 'package:amochat/components/rounded_button.dart';
 import 'package:amochat/constants.dart';
 import 'package:amochat/screens/chat_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:amochat/components/rounded_button.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const String id = 'registration_screen';
@@ -12,11 +13,8 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-
-  late String  email;
+  late String email;
   late String password;
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +65,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               title: 'Register',
               onPressed: () async {
                 try {
-                  Navigator.pushNamed(context, ChatScreen.id);
+                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                      email: email, password: password);
+                  Navigator.pushReplacementNamed(context, ChatScreen.id);
                 } catch (e) {
                   print(e);
                 }
