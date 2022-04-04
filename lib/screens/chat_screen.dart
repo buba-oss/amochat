@@ -90,24 +90,34 @@ class _ChatScreenState extends State<ChatScreen> {
                     AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
                         snapshot) {
                   if (snapshot.hasData) {}
+                  Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.lightGreenAccent,
+                    ),
+                  );
                   final messages = snapshot.data?.docs;
-                  List<Text> messageWidgets = [];
+                  List<MessageBubble> messageBubbles = [];
                   for (var message in messages!) {
                     final messageText = message.data();
                     final messageSender = message.data();
-                    final messageWidget =
-                        Text('$messageText from $messageSender');
-                    messageWidgets.add(messageWidget);
+
+                    final messageBubble = MessageBubble(
+                      sender: 'messageSender',
+                      text: messageText,
+                    );
+
+                    messageBubbles.add(messageBubble);
                   }
-                  return Column(
-                    children: messageWidgets,
+                  return Expanded(
+                    child: ListView(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10.0,
+                        vertical: 20.0,
+                      ),
+                      children: messageBubbles,
+                    ),
                   );
                 },
-              ),
-            ),
-            Center(
-              child: CircularProgressIndicator(
-                backgroundColor: Colors.lightGreenAccent,
               ),
             ),
             Container(
@@ -151,6 +161,34 @@ class FirebaseUser {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Text(loggedInUser),
+    );
+  }
+}
+
+class MessageBubble extends StatelessWidget {
+  MessageBubble({required this.sender, required this.text});
+
+  final String sender;
+  final String text;
+@override
+  Widget build  (BuildContext, context) {
+    return Padding(
+      padding: EdgeInsets.all(10.0),
+      child: Material(
+        borderRadius: BorderRadius.circular(30.0),
+        elevation: 5.0,
+        color: Colors.lightBlueAccent,
+        child: Padding(
+          padding:  EdgeInsets.symmetric(vertical: 10.0,horizontal: 20.0),
+          child: Text(
+            '$text from $sender',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 15.0,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
