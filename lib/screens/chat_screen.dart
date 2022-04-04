@@ -85,25 +85,30 @@ class _ChatScreenState extends State<ChatScreen> {
           children: <Widget>[
             Flexible(
               child: StreamBuilder(
-                  stream: _firestore.collection('messages').snapshots(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
-                          snapshot) {
-                    if (snapshot.hasData) {}
-                    final messages = snapshot.data?.docs;
-                    List<Text> messageWidgets = [];
-                    for (var message in messages!) {
-                      final messageText = message.data();
-                      final messageSender = message.data();
-
-                      final messageWidget =
-                          Text('$messageText from $messageSender');
-                      messageWidgets.add(messageWidget);
-                    }
-                    return Column(
-                      children: messageWidgets,
-                    );
-                  }),
+                stream: _firestore.collection('messages').snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                        snapshot) {
+                  if (snapshot.hasData) {}
+                  final messages = snapshot.data?.docs;
+                  List<Text> messageWidgets = [];
+                  for (var message in messages!) {
+                    final messageText = message.data();
+                    final messageSender = message.data();
+                    final messageWidget =
+                        Text('$messageText from $messageSender');
+                    messageWidgets.add(messageWidget);
+                  }
+                  return Column(
+                    children: messageWidgets,
+                  );
+                },
+              ),
+            ),
+            Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.lightGreenAccent,
+              ),
             ),
             Container(
               decoration: kMessageContainerDecoration,
