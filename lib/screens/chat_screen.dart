@@ -5,6 +5,7 @@ import 'package:amochat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 
+
 class ChatScreen extends StatefulWidget {
   static const String id = 'chat_screen';
   ChatScreen({Key? key}) : super(key: key);
@@ -16,43 +17,48 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
-   late FirebaseUser loggedInUser;
-   late String messageText;
-
+  late final FirebaseUser loggedInUser;
+  late String messageText;
 
   @override
   void initState() {
     super.initState();
     getCurrentUser();
+    getLoggedInUser();
   }
+
+
+
+  void getLoggedInUser() {
+  }
+
 
 
   void getCurrentUser() async {
     try {
       final user = await _auth.currentUser!;
       loggedInUser = user as FirebaseUser;
-     loggedInUser;
+      loggedInUser;
     } catch (e) {
       print(e);
     }
   }
 
- // void getMessages() async {
-   // final messages = await _firestore.collectionGroup('messages').get();
-     //for(var message in messages.docs) {
-       //print(message.data);
+  // void getMessages() async {
+  // final messages = await _firestore.collectionGroup('messages').get();
+  //for(var message in messages.docs) {
+  //print(message.data);
 
-     //}
+  //}
 //  }
 
-void messgesStream() async{
-   await for( var snapshot in  _firestore.collection('messages').snapshots()) {
-     for(var message in snapshot.docs) {
-       print(message.data);
-     }
-   }
-}
-
+  void messagesStream() async {
+    await for (var snapshot in _firestore.collection('messages').snapshots()) {
+      for (var message in snapshot.docs) {
+        print(message.data);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,64 +69,84 @@ void messgesStream() async{
           IconButton(
               icon: const Icon(Icons.close),
               onPressed: () {
-                messgesStream();
-       //         _auth.signOut();
-        //        Navigator.pop(context);
+                messagesStream();
+                         _auth.signOut();
+                        Navigator.pop(context);
               }),
         ],
         title: const Text('⚡️Chat'),
         backgroundColor: Colors.lightBlueAccent,
       ),
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Container(
-              decoration: kMessageContainerDecoration,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    child: TextField(
-                      onChanged: (value) {
-                       messageText = value;
-                      },
-                      decoration: kMessageTextFieldDecoration,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      //messagesText + loggedInUser;
-                      _firestore.collection('messages').add({
-                        'text': messageText,
-                        'sender': loggedInUser,
-                      });
-                    },
-                    child: const Text(
-                      'Send',
-                      style: kSendButtonTextStyle,
-                    ),
-                  ),
-                ],
+        child:
+           Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              StreamBuilder(
+                stream: _firestore.collection('messages').snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                  if (snapshot.hasData) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.lightGreenAccent,
+                      ),
+                    );
+                  }
+                    final messages = snapshot.data?.docs;
+                    List<Text> messageWidgets = [];
+                    for (var message in messages!) {
+                      final messageText = message.data();
+                      final messageSender = message.data();
+
+                      final messageWidget =
+                      Text('$messageText from $messageSender');
+                      messageWidgets.add(messageWidget);
+                    }
+                    return Flexible(
+                      child: Column(
+                        children: messageWidgets,
+                      ),
+                    );
+
+                }
               ),
-            ),
-          ],
+              Container(
+                decoration: kMessageContainerDecoration,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: TextField(
+                        onChanged: (value) {
+                          messageText = value;
+                        },
+                        decoration: kMessageTextFieldDecoration,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        //messagesText + loggedInUser;
+                        _firestore.collection('messages').add({
+                          'text': messageText,
+                          'sender': loggedInUser,
+                        });
+                      },
+                      child: const Text(
+                        'Send',
+                        style: kSendButtonTextStyle,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
+
     );
   }
 }
 
-class FirebaseUser{
-
-
-}
-
-
-
-
-
-
-
-
+class FirebaseUser {}
