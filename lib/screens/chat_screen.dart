@@ -4,6 +4,7 @@ import 'package:amochat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 final _firestore = FirebaseFirestore.instance;
+late final FirebaseUser loggedInUser;
 
 class ChatScreen extends StatefulWidget {
   static const String id = 'chat_screen';
@@ -16,7 +17,6 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final messageTextController = TextEditingController();
   final _auth = FirebaseAuth.instance;
-  late final FirebaseUser loggedInUser;
   late String messageText;
 
   @override
@@ -87,36 +87,34 @@ class _ChatScreenState extends State<ChatScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               MessagesStream(),
-              Flexible(
-                child: Container(
-                  decoration: kMessageContainerDecoration,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Expanded(
-                        child: TextField(
-                          controller: messageTextController,
-                          onChanged: (value) {
-                            messageText = value;
-                          },
-                          decoration: kMessageTextFieldDecoration,
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          messageTextController.clear();
-                          _firestore.collection('messages').add({
-                            'text': messageText,
-                            'sender': loggedInUser,
-                          });
+              Container(
+                decoration: kMessageContainerDecoration,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: TextField(
+                        controller: messageTextController,
+                        onChanged: (value) {
+                          messageText = value;
                         },
-                        child: const Text(
-                          'Send',
-                          style: kSendButtonTextStyle,
-                        ),
+                        decoration: kMessageTextFieldDecoration,
                       ),
-                    ],
-                  ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        messageTextController.clear();
+                        _firestore.collection('text').add({
+                          'text': messageText,
+                          'sender': loggedInUser,
+                        });
+                      },
+                      child: const Text(
+                        'Send',
+                        style: kSendButtonTextStyle,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -137,7 +135,7 @@ class MessagesStream extends StatelessWidget {
       builder: (BuildContext context,
           AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
         if (snapshot.hasData) {}
-        Center(
+         Center(
           child: CircularProgressIndicator(
             backgroundColor: Colors.lightGreenAccent,
           ),
@@ -145,9 +143,17 @@ class MessagesStream extends StatelessWidget {
         final messages = snapshot.data?.docs;
         List<MessageBubble> messageBubbles = [];
         for (var message in messages!) {
+          final messageText = message.data();
+          final messageSender = message.data();
+
+          final currentUser = loggedInUser;
+
+          if (currentUser == loggedInUser) {}
+
           final messageBubble = MessageBubble(
             sender: 'messageSender',
             text: 'messageText',
+            isMe: currentUser == messageSender,
           );
 
           messageBubbles.add(messageBubble);
@@ -176,10 +182,12 @@ class FirebaseUser {
 }
 
 class MessageBubble extends StatelessWidget {
-  const MessageBubble({Key? key, required this.sender, required this.text});
+  const MessageBubble(
+      {Key? key, required this.sender, required this.text, required this.isMe});
 
   final String sender;
   final String text;
+  final bool isMe;
 
   @override
   Widget build(BuildContext context) {
@@ -196,9 +204,13 @@ class MessageBubble extends StatelessWidget {
             ),
           ),
           Material(
-            borderRadius: BorderRadius.circular(30.0),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30.0),
+              bottomLeft: Radius.circular(30.0),
+              bottomRight: Radius.circular(30.0),
+            ),
             elevation: 5.0,
-            color: Colors.lightBlueAccent,
+            color: isMe ? Colors.lightBlueAccent : Colors.white,
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
               child: Text(
