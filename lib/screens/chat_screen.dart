@@ -1,10 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:amochat/constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 final _firestore = FirebaseFirestore.instance;
-late final FirebaseUser loggedInUser;
+final _auth = FirebaseAuth.instance;
+// assuming the user is logged in - if not, this would crash
+User get loggedInUser => _auth.currentUser!;
 
 class ChatScreen extends StatefulWidget {
   static const String id = 'chat_screen';
@@ -16,36 +18,7 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final messageTextController = TextEditingController();
-  final _auth = FirebaseAuth.instance;
   late String messageText;
-
-  @override
-  void initState() {
-    super.initState();
-    getCurrentUser();
-    getLoggedInUser();
-  }
-
-  @override
-  void setState(AmoChat) {
-    super.initState();
-    getLoggedInUser();
-  }
-
-  void getLoggedInUser() async {
-    final user = await loggedInUser;
-    loggedInUser = user;
-  }
-
-  void getCurrentUser() async {
-    try {
-      final user = await _auth.currentUser!;
-      loggedInUser = user as FirebaseUser;
-      loggedInUser;
-    } catch (e) {
-      print(e);
-    }
-  }
 
   // void getMessages() async {
   // final messages = await _firestore.collectionGroup('messages').get();
@@ -134,49 +107,42 @@ class MessagesStream extends StatelessWidget {
       stream: _firestore.collection('messages').snapshots(),
       builder: (BuildContext context,
           AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-        if (snapshot.hasData) {}
-         Center(
+        if (snapshot.hasData) {
+          final messages = snapshot.data?.docs;
+          List<MessageBubble> messageBubbles = [];
+          for (var message in messages!) {
+            final messageText = message.data();
+            final messageSender = message.data();
+
+            final currentUser = loggedInUser;
+
+            if (currentUser == loggedInUser) {}
+
+            final messageBubble = MessageBubble(
+              sender: 'messageSender',
+              text: 'messageText',
+              isMe: currentUser == messageSender,
+            );
+
+            messageBubbles.add(messageBubble);
+          }
+          return Expanded(
+            child: ListView(
+              padding: EdgeInsets.symmetric(
+                horizontal: 10.0,
+                vertical: 20.0,
+              ),
+              children: messageBubbles,
+            ),
+          );
+        }
+
+        return Center(
           child: CircularProgressIndicator(
             backgroundColor: Colors.lightGreenAccent,
           ),
         );
-        final messages = snapshot.data?.docs;
-        List<MessageBubble> messageBubbles = [];
-        for (var message in messages!) {
-          final messageText = message.data();
-          final messageSender = message.data();
-
-          final currentUser = loggedInUser;
-
-          if (currentUser == loggedInUser) {}
-
-          final messageBubble = MessageBubble(
-            sender: 'messageSender',
-            text: 'messageText',
-            isMe: currentUser == messageSender,
-          );
-
-          messageBubbles.add(messageBubble);
-        }
-        return Expanded(
-          child: ListView(
-            padding: EdgeInsets.symmetric(
-              horizontal: 10.0,
-              vertical: 20.0,
-            ),
-            children: messageBubbles,
-          ),
-        );
       },
-    );
-  }
-}
-
-class FirebaseUser {
-  late String loggedInUser;
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Text(loggedInUser),
     );
   }
 }
