@@ -60,9 +60,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     TextButton(
                       onPressed: () {
                         messageTextController.clear();
-                        _firestore.collection('text').add({
+                        _firestore.collection('messages').add({
                           'text': messageText,
-                          'sender': loggedInUser,
+                          'sender': loggedInUser.uid,
                         });
                       },
                       child: const Text(
@@ -96,13 +96,13 @@ class MessagesStream extends StatelessWidget {
 
           List<MessageBubble> messageBubbles = [];
           for (var message in messages!) {
-            final messageText = message.data();
-            final messageSender = message.data();
+            final messageText = message.data()['text'];
+            final messageSender = message.data()['sender'];
 
             final messageBubble = MessageBubble(
-              sender: 'messageSender',
-              text: 'messageText',
-              isMe: loggedInUser == messageSender,
+              sender: messageSender,
+              text: messageText,
+              isMe: loggedInUser.uid == messageSender,
             );
 
             messageBubbles.add(messageBubble);
