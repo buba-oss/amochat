@@ -1,4 +1,6 @@
+
 import 'package:amochat/constants.dart';
+import 'package:amochat/picker/user_imagepicker.dart';
 import 'package:amochat/screens/chat_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +17,9 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   bool showSpinner = false;
-  late String  email;
+  late String email;
   late String password;
-
-
+  late String useName;
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +32,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
+            children: [
               Flexible(
-                child: Hero(
-                  tag: 'logo',
-                  child: Container(
-                    height: 200.0,
-                    child: Image.asset('images/logo.png'),
-                  ),
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: UserImagePicker((_) {}),
+
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
@@ -66,6 +68,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     hintText: 'Enter your password'),
               ),
               SizedBox(
+                height: 8.0,
+              ),
+              TextField(
+                textAlign: TextAlign.center,
+                onChanged: (value) {
+                  useName = value;
+                },
+                decoration:
+                    kTextFieldDecoration.copyWith(hintText: 'user name'),
+              ),
+              SizedBox(
                 height: 24.0,
               ),
               RoundedButton(
@@ -73,17 +86,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 title: 'Register',
                 onPressed: () async {
                   setState(() {
-                  showSpinner = true;
+                    showSpinner = true;
                   });
                   try {
-                    await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+                    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                        email: email, password: password);
                     Navigator.pushNamed(context, ChatScreen.id);
                     setState(() {
                       showSpinner = false;
                     });
                     Navigator.pushReplacementNamed(context, ChatScreen.id);
-                  }
-                  catch (e) {
+                  } catch (e) {
                     print(e);
                   }
                 },

@@ -1,7 +1,10 @@
 import 'package:amochat/constants.dart';
+import 'package:amochat/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 
 final _firestore = FirebaseFirestore.instance;
 final _auth = FirebaseAuth.instance;
@@ -97,12 +100,14 @@ class MessagesStream extends StatelessWidget {
           List<MessageBubble> messageBubbles = [];
           for (var message in messages!) {
             final messageText = message.data()['text'];
+
             final messageSender = message.data()['sender'];
 
             final messageBubble = MessageBubble(
               sender: messageSender,
               text: messageText,
               isMe: loggedInUser.uid == messageSender,
+              userId: 'Sender',
             );
 
             messageBubbles.add(messageBubble);
@@ -113,16 +118,17 @@ class MessagesStream extends StatelessWidget {
             child: ListView(
               padding: EdgeInsets.symmetric(
                 horizontal: 10.0,
-                vertical: 20.0,
+                vertical: 10.0,
               ),
               children: messageBubbles,
             ),
           );
         }
-
-        return Center(
-          child: CircularProgressIndicator(
-            backgroundColor: Colors.lightGreenAccent,
+        return Material(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30.0),
+            bottomLeft: Radius.circular(30.0),
+            bottomRight: Radius.circular(30.0),
           ),
         );
       },
@@ -130,12 +136,19 @@ class MessagesStream extends StatelessWidget {
   }
 }
 
+
+
 class MessageBubble extends StatelessWidget {
   const MessageBubble(
-      {Key? key, required this.sender, required this.text, required this.isMe});
+      {Key? key,
+      required this.sender,
+      required this.text,
+      required this.isMe,
+      required this.userId});
 
   final String sender;
   final String text;
+  final String userId;
   final bool isMe;
 
   @override
@@ -143,10 +156,11 @@ class MessageBubble extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(10.0),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment:
+            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Text(
-            'sender',
+            userId,
             style: TextStyle(
               fontSize: 12.0,
               color: Colors.black45,
@@ -182,3 +196,43 @@ class MessageBubble extends StatelessWidget {
     );
   }
 }
+
+
+class Basic extends StatefulWidget {
+  const Basic({Key? key}) : super(key: key);
+
+  @override
+  State<Basic> createState() => _BasicState();
+}
+
+class _BasicState extends State<Basic> {
+  ChatUser user = ChatUser(
+    id: '1',
+    firstName: 'Buba',
+    lastName: 'Sanneh',
+  );
+  List<ChatMessage> messages = <ChatMessage>[
+    ChatMessage( text: 'Hey', createdAt: DateTime.now(), user: user,
+    ),
+
+  ];
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Basic example'),
+      ),
+      body: AmoChat (
+         (ChatMessage m) {
+          setState(() {
+            messages.insert(0, m);
+          });
+        }, messages: [],
+      ),
+    );
+  }
+}
+

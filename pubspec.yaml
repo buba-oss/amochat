@@ -19,6 +19,10 @@ dependencies:
   firebase_auth: ^3.3.11
   cloud_firestore: ^3.1.10
   modal_progress_hud_nsn: ^0.1.0-nullsafety-1
+  image_picker: ^0.8.5
+  firebase_storage: ^10.2.13
+  dash_chat_2: ^0.0.6
+ 
 
 dev_dependencies:
   flutter_test:
