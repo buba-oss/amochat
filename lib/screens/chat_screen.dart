@@ -1,10 +1,8 @@
-import 'package:amochat/constants.dart';
-import 'package:amochat/main.dart';
+import 'package:amochat/dash_chat.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 
 final _firestore = FirebaseFirestore.instance;
 final _auth = FirebaseAuth.instance;
@@ -20,12 +18,12 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final messageTextController = TextEditingController();
-  final _auth = FirebaseAuth.instance;
   late String messageText;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BasicDashChat();
+    /*return Scaffold(
       appBar: AppBar(
         leading: null,
         actions: <Widget>[
@@ -80,7 +78,7 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ),
       ),
-    );
+    );*/
   }
 }
 
@@ -91,8 +89,7 @@ class MessagesStream extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: _firestore.collection('messages').snapshots(),
-      builder: (BuildContext context,
-          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
         if (snapshot.hasData) {
           final messages = snapshot.data?.docs;
           print(messages);
@@ -112,7 +109,6 @@ class MessagesStream extends StatelessWidget {
 
             messageBubbles.add(messageBubble);
           }
-          print(messageBubbles.length);
 
           return Expanded(
             child: ListView(
@@ -136,15 +132,8 @@ class MessagesStream extends StatelessWidget {
   }
 }
 
-
-
 class MessageBubble extends StatelessWidget {
-  const MessageBubble(
-      {Key? key,
-      required this.sender,
-      required this.text,
-      required this.isMe,
-      required this.userId});
+  const MessageBubble({Key? key, required this.sender, required this.text, required this.isMe, required this.userId});
 
   final String sender;
   final String text;
@@ -156,8 +145,7 @@ class MessageBubble extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(10.0),
       child: Column(
-        crossAxisAlignment:
-            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Text(
             userId,
@@ -197,42 +185,41 @@ class MessageBubble extends StatelessWidget {
   }
 }
 
-
-class Basic extends StatefulWidget {
-  const Basic({Key? key}) : super(key: key);
-
+class BasicDashChat extends StatefulWidget {
   @override
-  State<Basic> createState() => _BasicState();
+  _BasicDashChatState createState() => _BasicDashChatState();
 }
 
-class _BasicState extends State<Basic> {
-  ChatUser user = ChatUser(
-    id: '1',
-    firstName: 'Buba',
-    lastName: 'Sanneh',
-  );
-  List<ChatMessage> messages = <ChatMessage>[
-    ChatMessage( text: 'Hey', createdAt: DateTime.now(), user: user,
-    ),
-
-  ];
-
-
+class _BasicDashChatState extends State<BasicDashChat> {
+  // use fake data from dash_chat.dart
+  ChatUser _user = user2;
+  List<ChatMessage> _messages = basicSample;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Basic example'),
+        leading: null,
+        actions: <Widget>[
+          IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: () async {
+                await _auth.signOut();
+                Navigator.pop(context);
+              }),
+        ],
+        title: const Text('⚡️Chat'),
+        backgroundColor: Colors.lightBlueAccent,
       ),
-      body: AmoChat (
-         (ChatMessage m) {
+      body: DashChat(
+        currentUser: user,
+        onSend: (ChatMessage m) {
           setState(() {
-            messages.insert(0, m);
+            _messages.insert(0, m);
           });
-        }, messages: [],
+        },
+        messages: _messages,
       ),
     );
   }
 }
-
