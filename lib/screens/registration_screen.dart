@@ -91,7 +91,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   try {
                     await FirebaseAuth.instance.createUserWithEmailAndPassword(
                         email: email, password: password);
-                    Navigator.pushNamed(context, ChatScreen.id);
+                    // pop current screen & replace welcome with chat screen
+                    Navigator.pop(context);
+                    Navigator.pushReplacementNamed(context, ChatScreen.id);
                     setState(() {
                       showSpinner = false;
                     });

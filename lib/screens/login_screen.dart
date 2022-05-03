@@ -94,7 +94,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         email: email,
                         password: password,
                       );
-                      Navigator.pushNamed(context, ChatScreen.id);
+                      // pop current screen & replace welcome with chat screen
+                      Navigator.pop(context);
+                      Navigator.pushReplacementNamed(context, ChatScreen.id);
                       setState(() {
                         showSpinner = false;
                       });

@@ -2,6 +2,7 @@ import 'package:amochat/screens/chat_screen.dart';
 import 'package:amochat/screens/login_screen.dart';
 import 'package:amochat/screens/registration_screen.dart';
 import 'package:amochat/screens/welcome_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,8 @@ class AmoChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: WelcomeScreen.id,
+      // if user has signed in, auto sign in on next
+      initialRoute: FirebaseAuth.instance.currentUser != null ? ChatScreen.id : WelcomeScreen.id,
       routes: {
         WelcomeScreen.id: (context) => WelcomeScreen(),
         RegistrationScreen.id: (context) => RegistrationScreen(),

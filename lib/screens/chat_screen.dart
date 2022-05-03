@@ -1,4 +1,5 @@
 import 'package:amochat/dash_chat.dart';
+import 'package:amochat/screens/welcome_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -199,13 +200,12 @@ class _BasicDashChatState extends State<BasicDashChat> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: null,
         actions: <Widget>[
           IconButton(
-              icon: const Icon(Icons.close),
+              icon: const Icon(Icons.logout),
               onPressed: () async {
                 await _auth.signOut();
-                Navigator.pop(context);
+                Navigator.of(context).pushReplacementNamed(WelcomeScreen.id);
               }),
         ],
         title: const Text('⚡️Chat'),
