@@ -53,43 +53,41 @@ class _ChatScreenState extends State<ChatScreen> {
                         decoration: kMessageTextFieldDecoration,
                       ),
                     ),
-                    TextButton(
-                      onPressed: () {
-                        // save the message to firebase and clear text field
-                        _firestore.collection('messages').add({
-                          'text': messageTextController.text,
-                          'sender': loggedInUser.uid,
-                        });
-                        messageTextController.clear();
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          TextButton(
-                            onPressed: () {},
-                            child: Icon(
-                              Icons.camera_alt_rounded,
-                            ),
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.camera_alt_rounded,
                           ),
-                          TextButton(
-                            onPressed: () {},
-                            child: Icon(
-                              Icons.keyboard_voice,
-                            ),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.keyboard_voice,
                           ),
-                          TextButton(
-                            onPressed: () {},
-                            child: Icon(
-                              Icons.call,
-                            ),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.call,
                           ),
-                          Text(
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            // save the message to firebase and clear text field
+                            _firestore.collection('messages').add({
+                              'text': messageTextController.text,
+                              'sender': loggedInUser.uid,
+                            });
+                            messageTextController.clear();
+                          },
+                          child: Text(
                             'Send',
                             style: kSendButtonTextStyle,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
