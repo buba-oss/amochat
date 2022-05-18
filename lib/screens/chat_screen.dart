@@ -18,6 +18,21 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final messageTextController = TextEditingController();
   final _auth = FirebaseAuth.instance;
+  bool _canSendMessage = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    messageTextController.addListener(() {
+      final canSendMessage = messageTextController.text.isNotEmpty;
+      if (_canSendMessage != canSendMessage) {
+        setState(() {
+          _canSendMessage = canSendMessage;
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,17 +89,11 @@ class _ChatScreenState extends State<ChatScreen> {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {
-                            // save the message to firebase and clear text field
-                            _firestore.collection('messages').add({
-                              'text': messageTextController.text,
-                              'sender': loggedInUser.uid,
-                            });
-                            messageTextController.clear();
-                          },
+                          // if the person hasn't typed anything, do not allow a message to be sent
+                          onPressed: _canSendMessage ? _sendMessage : null,
                           child: Text(
                             'Send',
-                            style: kSendButtonTextStyle,
+                            style: _canSendMessage ? kSendButtonTextStyle : kSendButtonDisabledTextStyle,
                           ),
                         ),
                       ],
@@ -97,6 +106,15 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
       ),
     );
+  }
+
+  void _sendMessage() {
+    // save the message to firebase and clear text field
+    _firestore.collection('messages').add({
+      'text': messageTextController.text,
+      'sender': loggedInUser.uid,
+    });
+    messageTextController.clear();
   }
 }
 
