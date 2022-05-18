@@ -66,21 +66,30 @@ class _ChatScreenState extends State<ChatScreen> {
                         });
                       },
                       child: Row(
-                        children:  [
-                          Icon(
-                            Icons.arrow_right,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            onPressed: () {},
+                            child: Icon(
+                              Icons.camera_alt_rounded,
+                            ),
                           ),
-                          Icon(
-                            Icons.camera,
+                          TextButton(
+                            onPressed: () {},
+                            child: Icon(
+                              Icons.keyboard_voice,
+                            ),
                           ),
-                          Icon(
-                            Icons.camera_alt_rounded,
+                          TextButton(
+                            onPressed: () {},
+                            child: Icon(
+                              Icons.call,
+                            ),
                           ),
-                          Icon(
-                            Icons.call,
-                          ),
-                          Icon(
-                            Icons.keyboard_voice,
+                          Text(
+                            'Send',
+                            style: kSendButtonTextStyle,
                           ),
                         ],
                       ),
