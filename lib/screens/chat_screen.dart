@@ -18,7 +18,6 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final messageTextController = TextEditingController();
   final _auth = FirebaseAuth.instance;
-  late String messageText;
 
   @override
   Widget build(BuildContext context) {
@@ -51,19 +50,17 @@ class _ChatScreenState extends State<ChatScreen> {
                     Expanded(
                       child: TextField(
                         controller: messageTextController,
-                        onChanged: (value) {
-                          messageText = value;
-                        },
                         decoration: kMessageTextFieldDecoration,
                       ),
                     ),
                     TextButton(
                       onPressed: () {
-                        messageTextController.clear();
+                        // save the message to firebase and clear text field
                         _firestore.collection('messages').add({
-                          'text': messageText,
+                          'text': messageTextController.text,
                           'sender': loggedInUser.uid,
                         });
+                        messageTextController.clear();
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
