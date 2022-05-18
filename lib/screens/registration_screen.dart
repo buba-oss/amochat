@@ -31,15 +31,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           padding: EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Flexible(
                 child: Row(
                   children: [
-                    Flexible(
-                      child: UserImagePicker((_) {}),
-
-                    ),
+                    UserImagePicker((_) {}),
                   ],
                 ),
               ),

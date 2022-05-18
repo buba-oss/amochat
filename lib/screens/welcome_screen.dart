@@ -58,18 +58,16 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     ),
                   ),
                 ),
-                Flexible(
-                  child: AnimatedTextKit(
-                    animatedTexts: [
-                      TyperAnimatedText(
-                        'AMO CHAT',
-                        textStyle: TextStyle(
-                          fontSize: 45.0,
-                          fontWeight: FontWeight.w900,
-                        ),
+                AnimatedTextKit(
+                  animatedTexts: [
+                    TyperAnimatedText(
+                      'AMO CHAT',
+                      textStyle: TextStyle(
+                        fontSize: 45.0,
+                        fontWeight: FontWeight.w900,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),

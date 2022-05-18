@@ -1,4 +1,3 @@
-
 import 'package:amochat/components/rounded_button.dart';
 import 'package:amochat/constants.dart';
 import 'package:amochat/screens/chat_screen.dart';
@@ -7,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class LoginScreen extends StatefulWidget {
-
   static const String id = 'login_screen';
   LoginScreen({Key? key}) : super(key: key);
 
@@ -20,20 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _auth = FirebaseAuth.instance;
   late String email;
   late String password;
-  late String username;
-  late String pickedImage;
-  late String submitFn;
 
-
-
-
-  @override
-  void initState() {
-    super.initState();
-
-  }
-
-  get imagePickFn => true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
         inAsyncCall: showSpinner,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.0),
-          child:Column(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
@@ -56,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               SizedBox(
-                height: 8.0,
+                height: 48.0,
               ),
               TextField(
                 keyboardType: TextInputType.emailAddress,
@@ -64,8 +49,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 onChanged: (value) {
                   email = value;
                 },
-                decoration: kTextFieldDecoration.copyWith(
-                    hintText: 'Enter your Email'),
+                decoration:
+                    kTextFieldDecoration.copyWith(hintText: 'Enter your Email'),
               ),
               SizedBox(
                 height: 8.0,
@@ -80,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     hintText: 'Enter your password'),
               ),
               SizedBox(
-                height: 8.0,
+                height: 24.0,
               ),
               RoundedButton(
                   title: 'Log In',
@@ -94,9 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         email: email,
                         password: password,
                       );
-                      // pop current screen & replace welcome with chat screen
-                      Navigator.pop(context);
-                      Navigator.pushReplacementNamed(context, ChatScreen.id);
+                      Navigator.pushNamed(context, ChatScreen.id);
                       setState(() {
                         showSpinner = false;
                       });
