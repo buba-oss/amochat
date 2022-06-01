@@ -41,14 +41,32 @@ class _ChatScreenState extends State<ChatScreen> {
         leading: null,
         actions: <Widget>[
           IconButton(
-              icon: const Icon(Icons.logout),
-              onPressed: () async {
-                await _auth.signOut();
-                Navigator.pop(context);
-              }),
+            onPressed: () {},
+            icon: Icon(
+              Icons.chat,
+            ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.add),
+          ),
+          IconButton(
+            icon: const Icon(
+              Icons.search,
+              color: Colors.white30,
+            ),
+            onPressed: () async {
+              await _auth.signOut();
+              Navigator.pop(context);
+            },
+          ),
+          CircleAvatar(
+            backgroundColor: Colors.amber,
+            radius: 15.0,
+          ),
         ],
         title: const Text('⚡️Chat'),
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Colors.red,
       ),
       body: SafeArea(
         child: Flexible(
@@ -70,30 +88,26 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                     Row(
                       children: [
-                        IconButton(
+                        TextButton(
                           onPressed: () {},
-                          icon: Icon(
-                            Icons.camera_alt_rounded,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.keyboard_voice,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.call,
+                          child: Icon(Icons.camera_alt_sharp,color: Colors.lightGreen,
                           ),
                         ),
                         TextButton(
-                          // if the person hasn't typed anything, do not allow a message to be sent
-                          onPressed: _canSendMessage ? _sendMessage : null,
-                          child: Text(
-                            'Send',
-                            style: _canSendMessage ? kSendButtonTextStyle : kSendButtonDisabledTextStyle,
+                          onPressed: () {},
+                          child: Icon(
+                            Icons.call,
+                          ),
+                        ),
+                        Container(
+                          child: TextButton(
+                            onPressed: _canSendMessage ? _sendMessage : null,
+                            child: Text(
+                              'Send',
+                              style: _canSendMessage
+                                  ? kSendButtonTextStyle
+                                  : kSendButtonDisabledTextStyle,
+                            ),
                           ),
                         ),
                       ],
@@ -108,11 +122,14 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  void _sendMessage() {
-    // save the message to firebase and clear text field
+
+
+  void _sendMessage() async {
     _firestore.collection('messages').add({
       'text': messageTextController.text,
       'sender': loggedInUser.uid,
+      'createAt': Timestamp.now(),
+      'userId': loggedInUser.uid
     });
     messageTextController.clear();
   }
@@ -187,12 +204,8 @@ class MessageBubble extends StatelessWidget {
         crossAxisAlignment:
             isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-          Text(
-            userId,
-            style: TextStyle(
-              fontSize: 12.0,
-              color: Colors.black45,
-            ),
+          CircleAvatar(
+            radius: 15.0,
           ),
           Material(
             borderRadius: isMe
@@ -224,3 +237,5 @@ class MessageBubble extends StatelessWidget {
     );
   }
 }
+
+
