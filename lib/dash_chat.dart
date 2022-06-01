@@ -1,5 +1,4 @@
 
-import 'package:amochat/main.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 
@@ -21,10 +20,9 @@ class _DsahChatState extends State<DsahChat> {
     profileImage: 'Image',
   );
   List<ChatMessage> messages = <ChatMessage>[
-//    ChatMessage( createdAt: DateTime.now(),text: 'Hey', user: user,)
   ];
   @override
   Widget build(BuildContext context) {
-    return AmoChat();
+    return Scaffold();
   }
 }

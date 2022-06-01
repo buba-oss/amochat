@@ -24,6 +24,9 @@ dependencies:
   dash_chat_2: ^0.0.6
   enume_generator: ^1.0.3
   photo_view: ^0.13.0
+  firebase_messaging: ^11.4.0
+  alan_voice: ^3.5.0
+
  
 
 dev_dependencies:
