@@ -1,7 +1,12 @@
+import 'dart:core';
 import 'package:amochat/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:just_audio/just_audio.dart';
+
+
 
 final _firestore = FirebaseFirestore.instance;
 final _auth = FirebaseAuth.instance;
@@ -19,6 +24,8 @@ class _ChatScreenState extends State<ChatScreen> {
   final messageTextController = TextEditingController();
   final _auth = FirebaseAuth.instance;
   bool _canSendMessage = false;
+
+  get projectId => null;
 
   @override
   void initState() {
@@ -60,10 +67,6 @@ class _ChatScreenState extends State<ChatScreen> {
               Navigator.pop(context);
             },
           ),
-          CircleAvatar(
-            backgroundColor: Colors.amber,
-            radius: 15.0,
-          ),
         ],
         title: const Text('⚡️Chat'),
         backgroundColor: Colors.red,
@@ -89,8 +92,16 @@ class _ChatScreenState extends State<ChatScreen> {
                     Row(
                       children: [
                         TextButton(
+                          onPressed: (){AudioPlayer;},
+                          child: Icon(
+                            Icons.keyboard_voice_rounded,
+                          ),
+                        ),
+                        TextButton(
                           onPressed: () {},
-                          child: Icon(Icons.camera_alt_sharp,color: Colors.lightGreen,
+                          child: Icon(
+                            Icons.camera_alt_sharp,
+                            color: Colors.lightGreen,
                           ),
                         ),
                         TextButton(
@@ -122,8 +133,6 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-
-
   void _sendMessage() async {
     _firestore.collection('messages').add({
       'text': messageTextController.text,
@@ -133,6 +142,8 @@ class _ChatScreenState extends State<ChatScreen> {
     });
     messageTextController.clear();
   }
+
+  pickImage({required ImageSource source}) {}
 }
 
 class MessagesStream extends StatelessWidget {
@@ -172,7 +183,6 @@ class MessagesStream extends StatelessWidget {
             ),
           );
         }
-
         return Center(
           child: CircularProgressIndicator(
             backgroundColor: Colors.lightGreenAccent,
@@ -237,5 +247,19 @@ class MessageBubble extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

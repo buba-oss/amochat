@@ -32,7 +32,7 @@ class _UserImagePickerState extends State<UserImagePicker> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           CircleAvatar(
-            radius: 40,
+            radius: 30,
             backgroundImage:
             _pickedImage != null? FileImage(File(_pickedImage!.path)) : null,
           ),

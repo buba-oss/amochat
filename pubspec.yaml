@@ -26,6 +26,8 @@ dependencies:
   photo_view: ^0.13.0
   firebase_messaging: ^11.4.0
   alan_voice: ^3.5.0
+  audioplayers: ^1.0.0
+  just_audio: ^0.9.24
 
  
 
