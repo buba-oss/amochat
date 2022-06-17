@@ -4,13 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:just_audio/just_audio.dart';
 
 
 
 final _firestore = FirebaseFirestore.instance;
 final _auth = FirebaseAuth.instance;
 User get loggedInUser => _auth.currentUser!;
+
 
 class ChatScreen extends StatefulWidget {
   static const String id = 'chat_screen';
@@ -26,6 +26,10 @@ class _ChatScreenState extends State<ChatScreen> {
   bool _canSendMessage = false;
 
   get projectId => null;
+
+  List<Object?>? get arguments => null;
+
+  Object? get constructor => null;
 
   @override
   void initState() {
@@ -92,13 +96,15 @@ class _ChatScreenState extends State<ChatScreen> {
                     Row(
                       children: [
                         TextButton(
-                          onPressed: (){AudioPlayer;},
+                          onPressed: () {},
                           child: Icon(
-                            Icons.keyboard_voice_rounded,
+                            Icons.keyboard_voice_outlined,
                           ),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            ImagePicker().pickImage(source: ImageSource.camera);
+                          },
                           child: Icon(
                             Icons.camera_alt_sharp,
                             color: Colors.lightGreen,
@@ -247,19 +253,3 @@ class MessageBubble extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

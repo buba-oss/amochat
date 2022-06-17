@@ -42,14 +42,13 @@ class Bubble extends StatelessWidget {
               topRight: Radius.circular(6),
             ),
           ),
-
           child: Text(
-            me ?
-               'Hello, How are u?'
+            me
+                ? 'Hello, How are u?'
                 : Random().nextBool()
                     ? 'It\'s Rainy!'
                     : Random().nextBool()
-                 ? 'Ok! got it.'
+                        ? 'Ok! got it.'
                         : 'How was going bro ?',
             style: TextStyle(
                 fontSize: 13.2, color: me ? Colors.white : Colors.black),
@@ -73,6 +72,4 @@ class Bubble extends StatelessWidget {
           SizedBox(height: .2)
         ],
       );
-
-
 }
