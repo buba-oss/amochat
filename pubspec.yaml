@@ -28,6 +28,8 @@ dependencies:
   alan_voice: ^3.5.0
   audioplayers: ^1.0.0
   just_audio: ^0.9.24
+  uuid: ^3.0.6
+  giphy_picker: ^2.0.0
 
  
 

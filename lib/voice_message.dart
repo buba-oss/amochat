@@ -89,16 +89,8 @@ class _VoiceMessageState extends State<VoiceMessage>
             SizedBox(width: 3),
             _durationWithNoise(context),
             SizedBox(width: 2.2),
-
-            TextButton(
-              onPressed: () {},
-              child: Icon(
-                Icons.keyboard_voice_rounded,
-              ),
-            ),
-
             /// x2 button will be added here.
-            // _speed(context),
+            /// _speed(context),
           ],
         ),
       ),
@@ -217,6 +209,23 @@ class _VoiceMessageState extends State<VoiceMessage>
     );
   }
 
+  speed(BuildContext context) => InkWell(
+         onTap: () => _toggle2x(),
+      child: Container(
+             alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(horizontal: 3, vertical: 1.6),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(2.8), color: widget.meFgColor.withOpacity(.28),
+            ),
+            width: 9.8,
+           child: Text(
+             !x2 ? '1X' : '2X',
+             style: TextStyle(fontSize: 9.8, color: widget.meFgColor),
+           ),
+          ),
+        );
+
+
 
 
   _setPlayingStatus() => _isPlaying = _playingStatus == 1;
@@ -300,6 +309,9 @@ class _VoiceMessageState extends State<VoiceMessage>
     await _player.seek(Duration(seconds: duration));
     setState(() {});
   }
+}
+
+class _toggle2x {
 }
 
 

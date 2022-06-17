@@ -1,0 +1,252 @@
+[33mcommit 3c4647e03acd502c2649b50bc33d2d8759561166[m[33m ([m[1;36mHEAD -> [m[1;32mtesting[m[33m)[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Fri Jun 17 18:35:35 2022 +0200
+
+    add 3 new files
+
+[33mcommit 5a9cc86f19b1af71bb18e24f6b4e48e2f5d455fe[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Fri Jun 17 17:25:51 2022 +0200
+
+    add new files
+
+[33mcommit dd4f684d109b8423690a3d183d58e7a584bdb5a6[m[33m ([m[1;31morigin/testing[m[33m)[m
+Merge: d680731 2b1af2c
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Wed Jun 1 15:53:05 2022 +0200
+
+    Merge remote-tracking branch 'origin/testing' into testing
+
+[33mcommit d6807310cb0341275bbe65ab2e4110368833e01d[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Wed Jun 1 15:52:25 2022 +0200
+
+    add new work to amo chat
+
+[33mcommit 2b1af2cee00db60ab67c93454175c670196df2ab[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Wed Jun 1 15:52:25 2022 +0200
+
+    add new work to amo chat
+
+[33mcommit 4b0b7b2b8d6b411d413de0a42872e9634670f220[m
+Author: James Leahy <defuncart@gmail.com>
+Date:   Wed May 18 16:54:28 2022 +0200
+
+    if the person hasn't typed anything, do not allow a message to be sent
+
+[33mcommit 89a84250b6b0e46d58456a04452b05bc300904f3[m
+Author: James Leahy <defuncart@gmail.com>
+Date:   Wed May 18 16:49:50 2022 +0200
+
+    Refactor buttons into a row
+
+[33mcommit 7041e11b526050f1d4c5a7de5fd66b7faf08278a[m
+Author: James Leahy <defuncart@gmail.com>
+Date:   Wed May 18 16:43:16 2022 +0200
+
+    Use text controller to send message
+
+[33mcommit 0f3b446ee020920a86e376a04c242ababc23b7b1[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Wed May 18 14:11:11 2022 +0200
+
+    Add icons to chat Screen
+
+[33mcommit 18af216227c87b960a35ab55c223c36dceb30976[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Wed May 18 13:08:30 2022 +0200
+
+    add new work to amo chat
+
+[33mcommit 95525a958b624d886f932f05a413d603de8e7929[m
+Author: James Leahy <defuncart@gmail.com>
+Date:   Tue May 3 17:45:07 2022 +0200
+
+    Enable autologin
+
+[33mcommit eab7d1e92c847390ca4f94ed2c8746f2275f3cca[m
+Author: James Leahy <defuncart@gmail.com>
+Date:   Tue May 3 17:42:44 2022 +0200
+
+    Integrate dash chat
+
+[33mcommit 63d84d9bec4b033ea3184a1223533375edc5e0ec[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Sun May 1 01:41:54 2022 +0200
+
+    problems to be to work on
+
+[33mcommit d6b1bb89e24a6ea13a1227730a27d1f09f17d68a[m
+Merge: e30139c 7bb4c07
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Mon Apr 25 18:33:15 2022 +0200
+
+    Merge remote-tracking branch 'origin/testing' into testing
+
+[33mcommit e30139c042bf31351d420368e15123576b91a911[m
+Author: James Leahy <defuncart@gmail.com>
+Date:   Sat Apr 9 19:11:01 2022 +0200
+
+    Save sender uuid & deserialize messages
+
+[33mcommit 7bb4c07938793d0c1a8b5a3e16e936542a95c72a[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m
+Author: James Leahy <defuncart@gmail.com>
+Date:   Sat Apr 9 19:11:01 2022 +0200
+
+    Save sender uuid & deserialize messages
+
+[33mcommit 68a932a350bbd50d28a3e10f5881fcc955baa3aa[m
+Author: James Leahy <defuncart@gmail.com>
+Date:   Sat Apr 9 19:08:31 2022 +0200
+
+    Fix merge conflicts
+
+[33mcommit 342a692d1f0d83bfa14fde3f4b5f1dfdb95b4cf2[m
+Merge: 29a97ab 7516111
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Sat Apr 9 18:44:54 2022 +0200
+
+    Merge remote-tracking branch 'origin/Fbase' into Fbase
+    
+    # Conflicts:
+    #       lib/screens/chat_screen.dart
+    #       lib/screens/login_screen.dart
+
+[33mcommit 29a97abd20f3d36dc0b3dc5baf96acda10a3c40a[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Sat Apr 9 18:43:20 2022 +0200
+
+    final stage of my app
+
+[33mcommit 751611185ebdca333a3243dc62fe388994cea480[m
+Author: James Leahy <defuncart@gmail.com>
+Date:   Sat Apr 9 16:32:44 2022 +0200
+
+    Login-ensure firebase auth is called. Chat-only show messages when data
+
+[33mcommit 53f422b6aa9f34785b1e0528304a2e0955ee9cba[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Wed Apr 6 18:50:17 2022 +0200
+
+    add new work to amo chat
+
+[33mcommit 067ed0011acaa218bbcfa29f7ac4be5b722356a3[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Wed Apr 6 17:09:20 2022 +0200
+
+    add flexible to hero
+
+[33mcommit 5cdc8eaa705281941dea97344a21815addcfcc4b[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Wed Apr 6 16:04:05 2022 +0200
+
+    add new work
+
+[33mcommit 9b543d96a61f65823054205ea0fb39b3d42288bb[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Mon Apr 4 19:12:26 2022 +0200
+
+    add new work
+
+[33mcommit 4ce9c88a6189c5c901a7095609754dea1ec920d5[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Mon Apr 4 15:16:00 2022 +0200
+
+    add to newwork  chatScreen
+
+[33mcommit b6cdb0875801b41d04b46776da8726b0b72be6ea[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Mon Apr 4 14:51:49 2022 +0200
+
+    add snapshot to chatScreen
+
+[33mcommit c3cf0d56aabb108748f72030bd447b179a878282[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Mon Apr 4 14:51:05 2022 +0200
+
+    add firebase loggedInUser
+
+[33mcommit 2811725c9aa1b3f652702f8ec8d3f452ded541d1[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Mon Apr 4 03:57:56 2022 +0200
+
+    add work in chatscreen
+
+[33mcommit db297955bff3599808978770e45a9a25d165879e[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Sun Apr 3 19:25:07 2022 +0200
+
+    add user and message and create messages.
+
+[33mcommit 19b78c18fc7bc121e8299fafd241085b6023089c[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Wed Mar 30 20:16:12 2022 +0200
+
+    add user content
+
+[33mcommit eb0f0cace707cd9bc7f99a7a2d9cfecad4162c33[m
+Author: James Leahy <defuncart@gmail.com>
+Date:   Thu Mar 31 13:37:25 2022 +0200
+
+    Initialize Firebase & create user account in RegistrationScreen.
+
+[33mcommit 66371a040c5b8251ab0219da2f28dbccd897d4ac[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Mon Mar 28 16:56:01 2022 +0200
+
+    add textAlign to chat screen
+
+[33mcommit b9d72396dc44b0668d3b2aded5ae5a6555f7fa17[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Mon Mar 28 14:17:37 2022 +0200
+
+    add changes in Round Button
+
+[33mcommit 5305e1f2f83eafe38acb93a284a8b20e01149035[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Mon Mar 28 12:36:40 2022 +0200
+
+    add new work to amo chat
+
+[33mcommit 1bb8f4755248776038d3b73a6cb9de6d7e7a7b87[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Mon Mar 28 11:02:44 2022 +0200
+
+    add  text decoration in login-screen
+
+[33mcommit 64d9cc481921a01881c86439d6dd067892ff28b8[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Tue Mar 22 23:56:19 2022 +0100
+
+    change made in W/S
+
+[33mcommit 59348fe13dfcd67a65e41cdfc7c25ef5b6924923[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Tue Mar 22 23:45:30 2022 +0100
+
+    made changes in Main
+
+[33mcommit 2d893ca527aa46604e645ed116ce94138350e9a3[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Tue Mar 22 22:27:55 2022 +0100
+
+    made changes in welcomScrre
+
+[33mcommit 240ee2cc55bae83f738d880e4923355d73dddddc[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Tue Mar 22 22:27:04 2022 +0100
+
+    made changes in routers
+
+[33mcommit 72bf9241de4707c3ddd401380e2cb0f712a414a9[m
+Author: Buba Sanneh <sannehbalamo@gmail.com>
+Date:   Fri Mar 18 15:16:10 2022 +0100
+
+    change text
+
+[33mcommit 4f5bc0104b18081a95f6c471bf2c60d05fa1dded[m
+Author: buba-oss <62755636+buba-oss@users.noreply.github.com>
+Date:   Sun Mar 13 11:40:26 2022 +0100
+
+    initial commit

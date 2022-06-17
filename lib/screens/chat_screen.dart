@@ -2,10 +2,12 @@ import 'dart:core';
 import 'package:amochat/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:just_audio/just_audio.dart';
-
+import 'dart:io';
+import 'package:uuid/uuid.dart';
+import 'package:giphy_picker/giphy_picker.dart';
 
 
 final _firestore = FirebaseFirestore.instance;
@@ -24,10 +26,12 @@ class _ChatScreenState extends State<ChatScreen> {
   final messageTextController = TextEditingController();
   final _auth = FirebaseAuth.instance;
   bool _canSendMessage = false;
+  XFile? _image;
+  final gif = GiphyPicker();
 
-  get projectId => null;
 
-  @override
+
+      @override
   void initState() {
     super.initState();
 
@@ -92,13 +96,14 @@ class _ChatScreenState extends State<ChatScreen> {
                     Row(
                       children: [
                         TextButton(
-                          onPressed: (){AudioPlayer;},
-                          child: Icon(
-                            Icons.keyboard_voice_rounded,
-                          ),
+                          onPressed: () {},
+                          child: Icon(Icons.keyboard_voice_rounded),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            _image = await ImagePicker()
+                                .pickImage(source: ImageSource.camera);
+                          },
                           child: Icon(
                             Icons.camera_alt_sharp,
                             color: Colors.lightGreen,
@@ -134,16 +139,33 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _sendMessage() async {
+    String? url;
+    if (_image != null) {
+      final storageReferencePath = '${Uuid().v4}.jpg';
+      final storageReference =
+          FirebaseStorage.instance.ref().child(storageReferencePath);
+      await storageReference.putFile(File(_image!.path));
+      url = await storageReference.getDownloadURL();
+      final gif = await GiphyPicker.pickGif(
+          context: context,
+          apiKey: '[fmN4ZV8SjjVYvCfqvnfNbc3fK8sEIU8k]');
+
+
+    }
     _firestore.collection('messages').add({
       'text': messageTextController.text,
       'sender': loggedInUser.uid,
       'createAt': Timestamp.now(),
-      'userId': loggedInUser.uid
+      'userId': loggedInUser.uid,
+      'url': url,
     });
     messageTextController.clear();
+    _image = null;
   }
 
-  pickImage({required ImageSource source}) {}
+  pickImage({required ImageSource source}) {
+    ImagePicker().pickImage(source: ImageSource.camera);
+  }
 }
 
 class MessagesStream extends StatelessWidget {
@@ -152,22 +174,23 @@ class MessagesStream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: _firestore.collection('messages').snapshots(),
+      stream: _firestore.collection('messages').orderBy('createAt').snapshots(),
       builder: (BuildContext context,
           AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
         if (snapshot.hasData) {
-          final messages = snapshot.data?.docChanges;
+          final messages = snapshot.data!.docs;
           print(messages);
 
           List<MessageBubble> messageBubbles = [];
-          for (var message in messages!) {
-            final messageText = message.doc['text'];
-            final messageSender = message.doc['sender'];
+          for (var message in messages) {
+            final messageText = message['text'];
+            final messageSender = message['sender'];
             final messageBubble = MessageBubble(
               sender: messageSender,
               text: messageText,
               isMe: loggedInUser.uid == messageSender,
               userId: AutofillHints.username,
+              url: message.data()['url'],
             );
             messageBubbles.add(messageBubble);
           }
@@ -185,7 +208,7 @@ class MessagesStream extends StatelessWidget {
         }
         return Center(
           child: CircularProgressIndicator(
-            backgroundColor: Colors.lightGreenAccent,
+            backgroundColor: Colors.lightBlueAccent,
           ),
         );
       },
@@ -194,20 +217,26 @@ class MessagesStream extends StatelessWidget {
 }
 
 class MessageBubble extends StatelessWidget {
-  const MessageBubble(
-      {Key? key,
-      required this.sender,
-      required this.text,
-      required this.isMe,
-      required this.userId});
+  const MessageBubble({
+    Key? key,
+    required this.sender,
+    required this.text,
+    required this.isMe,
+    required this.userId,
+    this.url, this.gif,
+  });
 
   final String sender;
   final String text;
   final String userId;
   final bool isMe;
+  final String? url;
+  final gif;
+
 
   @override
   Widget build(BuildContext context) {
+    GiphyImage.original(gif: gif);
     return Padding(
       padding: EdgeInsets.all(10.0),
       child: Column(
@@ -242,24 +271,15 @@ class MessageBubble extends StatelessWidget {
               ),
             ),
           ),
+          if (url != null)
+            Image.network(
+              gif.images.original.url,
+              headers: {'accept': 'image/*'},
+              width: 200,
+              height: 200,
+            ),
         ],
       ),
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
