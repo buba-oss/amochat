@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:uuid/uuid.dart';
-import 'package:giphy_picker/giphy_picker.dart';
-
 
 final _firestore = FirebaseFirestore.instance;
 final _auth = FirebaseAuth.instance;
@@ -27,11 +25,9 @@ class _ChatScreenState extends State<ChatScreen> {
   final _auth = FirebaseAuth.instance;
   bool _canSendMessage = false;
   XFile? _image;
-  final gif = GiphyPicker();
 
 
-
-      @override
+  @override
   void initState() {
     super.initState();
 
@@ -96,7 +92,8 @@ class _ChatScreenState extends State<ChatScreen> {
                     Row(
                       children: [
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                          },
                           child: Icon(Icons.keyboard_voice_rounded),
                         ),
                         TextButton(
@@ -146,9 +143,6 @@ class _ChatScreenState extends State<ChatScreen> {
           FirebaseStorage.instance.ref().child(storageReferencePath);
       await storageReference.putFile(File(_image!.path));
       url = await storageReference.getDownloadURL();
-      final gif = await GiphyPicker.pickGif(
-          context: context,
-          apiKey: '[fmN4ZV8SjjVYvCfqvnfNbc3fK8sEIU8k]');
 
 
     }
@@ -161,6 +155,8 @@ class _ChatScreenState extends State<ChatScreen> {
     });
     messageTextController.clear();
     _image = null;
+
+
   }
 
   pickImage({required ImageSource source}) {
@@ -176,7 +172,7 @@ class MessagesStream extends StatelessWidget {
     return StreamBuilder(
       stream: _firestore.collection('messages').orderBy('createAt').snapshots(),
       builder: (BuildContext context,
-          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot)  {
         if (snapshot.hasData) {
           final messages = snapshot.data!.docs;
           print(messages);
@@ -223,7 +219,7 @@ class MessageBubble extends StatelessWidget {
     required this.text,
     required this.isMe,
     required this.userId,
-    this.url, this.gif,
+    this.url,
   });
 
   final String sender;
@@ -231,12 +227,10 @@ class MessageBubble extends StatelessWidget {
   final String userId;
   final bool isMe;
   final String? url;
-  final gif;
 
 
   @override
   Widget build(BuildContext context) {
-    GiphyImage.original(gif: gif);
     return Padding(
       padding: EdgeInsets.all(10.0),
       child: Column(
@@ -273,8 +267,7 @@ class MessageBubble extends StatelessWidget {
           ),
           if (url != null)
             Image.network(
-              gif.images.original.url,
-              headers: {'accept': 'image/*'},
+              url!,
               width: 200,
               height: 200,
             ),
