@@ -146,11 +146,6 @@ class _ChatScreenState extends State<ChatScreen> {
           FirebaseStorage.instance.ref().child(storageReferencePath);
       await storageReference.putFile(File(_image!.path));
       url = await storageReference.getDownloadURL();
-      final gif = await GiphyPicker.pickGif(
-          context: context,
-          apiKey: '[fmN4ZV8SjjVYvCfqvnfNbc3fK8sEIU8k]');
-
-
     }
     _firestore.collection('messages').add({
       'text': messageTextController.text,
@@ -191,6 +186,7 @@ class MessagesStream extends StatelessWidget {
               isMe: loggedInUser.uid == messageSender,
               userId: AutofillHints.username,
               url: message.data()['url'],
+              gif: message.data()['gif'],
             );
             messageBubbles.add(messageBubble);
           }
