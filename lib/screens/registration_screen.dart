@@ -1,11 +1,9 @@
-
 import 'package:amochat/constants.dart';
 import 'package:amochat/screens/chat_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:amochat/components/rounded_button.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-
 import '../image_picker/user_image.dart';
 
 class RegistrationScreen extends StatefulWidget {

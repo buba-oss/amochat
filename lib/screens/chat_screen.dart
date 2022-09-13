@@ -1,12 +1,13 @@
 import 'dart:core';
+import 'dart:math';
 import 'package:amochat/constants.dart';
+import 'package:amochat/screens/search_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-import 'package:uuid/uuid.dart';
 
 final _firestore = FirebaseFirestore.instance;
 final _auth = FirebaseAuth.instance;
@@ -14,7 +15,7 @@ User get loggedInUser => _auth.currentUser!;
 
 class ChatScreen extends StatefulWidget {
   static const String id = 'chat_screen';
-  ChatScreen({Key? key}) : super(key: key);
+  ChatScreen({Key? key, required uid}) : super(key: key);
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -22,9 +23,13 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final messageTextController = TextEditingController();
-  final _auth = FirebaseAuth.instance;
   bool _canSendMessage = false;
   XFile? _image;
+  int _page = 0;
+  late PageController pageController;
+
+
+
 
 
   @override
@@ -41,6 +46,15 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
+
+  void onPageChanged(int page) {
+    setState(() {
+      _page = page;
+    });
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,24 +62,18 @@ class _ChatScreenState extends State<ChatScreen> {
         leading: null,
         actions: <Widget>[
           IconButton(
+            onPressed: () => SearchScreen,
+            icon: Icon(
+              Icons.search,
+              color: (_page == 0) ? primaryColor : secondaryColor,
+            ),
+          ),
+          IconButton(
             onPressed: () {},
             icon: Icon(
-              Icons.chat,
+              Icons.favorite,
+              color: Colors.green,
             ),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.add),
-          ),
-          IconButton(
-            icon: const Icon(
-              Icons.search,
-              color: Colors.white30,
-            ),
-            onPressed: () async {
-              await _auth.signOut();
-              Navigator.pop(context);
-            },
           ),
         ],
         title: const Text('⚡️Chat'),
@@ -92,8 +100,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     Row(
                       children: [
                         TextButton(
-                          onPressed: () async {
-                          },
+                          onPressed: () {},
                           child: Icon(Icons.keyboard_voice_rounded),
                         ),
                         TextButton(
@@ -123,6 +130,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             ),
                           ),
                         ),
+                        const Divider(),
                       ],
                     ),
                   ],
@@ -138,13 +146,11 @@ class _ChatScreenState extends State<ChatScreen> {
   void _sendMessage() async {
     String? url;
     if (_image != null) {
-      final storageReferencePath = '${Uuid().v4}.jpg';
+      final storageReferencePath = 'myImage${Random().nextInt(1000)}';
       final storageReference =
           FirebaseStorage.instance.ref().child(storageReferencePath);
       await storageReference.putFile(File(_image!.path));
       url = await storageReference.getDownloadURL();
-
-
     }
     _firestore.collection('messages').add({
       'text': messageTextController.text,
@@ -155,8 +161,6 @@ class _ChatScreenState extends State<ChatScreen> {
     });
     messageTextController.clear();
     _image = null;
-
-
   }
 
   pickImage({required ImageSource source}) {
@@ -172,7 +176,7 @@ class MessagesStream extends StatelessWidget {
     return StreamBuilder(
       stream: _firestore.collection('messages').orderBy('createAt').snapshots(),
       builder: (BuildContext context,
-          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot)  {
+          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
         if (snapshot.hasData) {
           final messages = snapshot.data!.docs;
           print(messages);
@@ -228,7 +232,6 @@ class MessageBubble extends StatelessWidget {
   final bool isMe;
   final String? url;
 
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -238,7 +241,13 @@ class MessageBubble extends StatelessWidget {
             isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           CircleAvatar(
-            radius: 15.0,
+            radius: 20,
+            backgroundImage: NetworkImage(
+              'https://www.kindpng.com/picc/m/21-214439_free-high-quality-person-icon-default-profile-picture.png',
+            ),
+          ),
+          SizedBox(
+            height: 4,
           ),
           Material(
             borderRadius: isMe
